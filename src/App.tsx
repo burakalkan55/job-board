@@ -3,10 +3,12 @@ import Header from "./Components/Header";
 import FilterBar from "./Components/FilterBar";
 import JobCard from "./Components/JobCard";
 import { fetchJobs } from "./hooks/Fetching";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Pagination, Stack } from "@mui/material";
 
 function App() {
   const [jobs, setJobs] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 8;
 
   const [filters, setFilters] = useState({
     remote: false,
@@ -17,6 +19,7 @@ function App() {
   const handleSearch = async (query: string) => {
     const result = await fetchJobs(query);
     setJobs(result);
+    setCurrentPage(1); // Yeni arama yapıldığında ilk sayfaya dön
   };
 
   const onFilterChange = (field: string, value: string | boolean) => {
@@ -24,6 +27,7 @@ function App() {
       ...prev,
       [field]: value,
     }));
+    setCurrentPage(1); // Filtre değiştiğinde ilk sayfaya dön
   };
 
   const filteredJobs = jobs.filter((job) => {
@@ -37,6 +41,17 @@ function App() {
 
     return matchRemote && matchLocation && matchCompany;
   });
+
+  // Pagination hesaplamaları
+  const pageCount = Math.ceil(filteredJobs.length / jobsPerPage);
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <Box sx={{ pt: 10, px: 3, pb: 6 }}>
@@ -60,8 +75,8 @@ function App() {
         gap={3}
         sx={{ mt: 4 }}
       >
-        {filteredJobs.length > 0 ? (
-          filteredJobs.map((job, index) => (
+        {currentJobs.length > 0 ? (
+          currentJobs.map((job, index) => (
             <JobCard
               key={index}
               job={{
@@ -84,6 +99,18 @@ function App() {
           </Typography>
         )}
       </Box>
+
+      {pageCount > 1 && (
+        <Stack spacing={2} alignItems="center" sx={{ mt: 4 }}>
+          <Pagination 
+            count={pageCount} 
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            size="large"
+          />
+        </Stack>
+      )}
     </Box>
   );
 }
