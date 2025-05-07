@@ -96,7 +96,7 @@ function App() {
             textAlign="center"
             sx={{ mt: 10 }}
           >
-            Aramanızla eşleşen iş ilanı bulunamadı 🥲
+            Aramanızla eşleşen iş ilanı bulunamadı...
           </Typography>
         )}
       </Box>
