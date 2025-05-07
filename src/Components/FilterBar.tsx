@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Box,
+
   FormControlLabel,
   Switch,
   TextField,
@@ -19,7 +19,7 @@ type FilterProps = {
 
 const FilterBar: React.FC<FilterProps> = ({ filters, onFilterChange }) => {
   return (
-    <Paper sx={{ p: 2, mb: 3 }}>
+    <Paper sx={{ p: 2, mb: 3 , pt: 7}} elevation={3}>
       <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={2}

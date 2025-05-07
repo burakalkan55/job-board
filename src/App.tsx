@@ -5,6 +5,7 @@ import JobCard from "./Components/JobCard";
 import { fetchJobs } from "./hooks/Fetching";
 import { Box, Typography, Pagination, Stack } from "@mui/material";
 
+
 function App() {
   const [jobs, setJobs] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,7 +49,7 @@ function App() {
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -99,6 +100,8 @@ function App() {
           </Typography>
         )}
       </Box>
+      
+    
 
       {pageCount > 1 && (
         <Stack spacing={2} alignItems="center" sx={{ mt: 4 }}>

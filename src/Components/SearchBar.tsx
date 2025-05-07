@@ -4,6 +4,7 @@ import {
   InputBase,
   Paper,
   IconButton,
+  Button,
   useTheme,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -50,6 +51,7 @@ const SearchBar = ({ onSearch }: Props) => {
         <IconButton type="submit" sx={{ p: "10px", color: isDark ? "#ffffff" : "#333" }}>
           <SearchIcon />
         </IconButton>
+
         <InputBase
           sx={{
             ml: 1,
@@ -65,6 +67,23 @@ const SearchBar = ({ onSearch }: Props) => {
           onChange={(e) => setQuery(e.target.value)}
           inputProps={{ style: { color: isDark ? "#ffffff" : "#000000" } }}
         />
+
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            ml: 1,
+            bgcolor: theme.palette.primary.main,
+            color: "#fff",
+            "&:hover": {
+              bgcolor: theme.palette.primary.dark,
+            },
+            borderRadius: 3,
+            textTransform: "none",
+          }}
+        >
+          Ara
+        </Button>
       </Paper>
     </Box>
   );
